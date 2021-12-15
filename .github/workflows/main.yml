@@ -21,7 +21,7 @@ jobs:
         python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
     - run: python generate_feeds.py
     - name: Commit Changes
-    - uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Automated snapshot
         push_options: '--force'
