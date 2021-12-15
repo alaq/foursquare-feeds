@@ -1,0 +1,28 @@
+name: Foursquare Checkin Backup
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: "0 */4 * * *"
+    
+jobs:
+  # This workflow contains a single job called "build"
+  backup:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+    - run: python generate_feeds.py
+    - name: Commit Changes
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Automated snapshot
+        push_options: '--force'
+        commit_author: Githb Actions <actions@github.com> # defaults to author of the commit that triggered the run
